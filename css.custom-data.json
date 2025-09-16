@@ -1,0 +1,39 @@
+{
+  "version": 1.1,
+  "atDirectives": [
+    {
+      "name": "@tailwind",
+      "description": "Tailwind CSS directive for including base, components, or utilities styles",
+      "references": [
+        {
+          "name": "Tailwind CSS Documentation",
+          "url": "https://tailwindcss.com/docs/functions-and-directives#tailwind"
+        }
+      ]
+    },
+    {
+      "name": "@apply",
+      "description": "Tailwind CSS @apply directive for applying utility classes",
+      "references": [
+        {
+          "name": "Tailwind CSS Documentation",
+          "url": "https://tailwindcss.com/docs/functions-and-directives#apply"
+        }
+      ]
+    }
+  ],
+  "properties": [
+    {
+      "name": "border-border",
+      "description": "Tailwind utility class for border color"
+    },
+    {
+      "name": "bg-background", 
+      "description": "Tailwind utility class for background color"
+    },
+    {
+      "name": "text-foreground",
+      "description": "Tailwind utility class for text color"
+    }
+  ]
+}

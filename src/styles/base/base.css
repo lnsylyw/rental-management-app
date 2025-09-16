@@ -1,0 +1,13 @@
+/* Base element styles and global reset */
+@layer base {
+  * {
+    @apply border-border; /* Apply border color using CSS variable */
+  }
+  
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    @apply bg-background text-foreground; /* Apply background and text colors */
+  }
+  
+  /* Additional base styles can be added here */
+}

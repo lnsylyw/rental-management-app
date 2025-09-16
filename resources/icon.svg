@@ -1,0 +1,37 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1E40AF;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="url(#gradient)" rx="180"/>
+  
+  <!-- House icon -->
+  <g transform="translate(200, 200)">
+    <!-- House base -->
+    <rect x="100" y="300" width="424" height="324" fill="#ffffff" rx="20"/>
+    
+    <!-- Roof -->
+    <polygon points="312,150 80,300 544,300" fill="#ffffff"/>
+    
+    <!-- Door -->
+    <rect x="250" y="450" width="124" height="174" fill="#3B82F6" rx="10"/>
+    <circle cx="350" cy="537" r="8" fill="#ffffff"/>
+    
+    <!-- Windows -->
+    <rect x="150" y="380" width="80" height="80" fill="#3B82F6" rx="8"/>
+    <rect x="394" y="380" width="80" height="80" fill="#3B82F6" rx="8"/>
+    
+    <!-- Window frames -->
+    <line x1="190" y1="380" x2="190" y2="460" stroke="#ffffff" stroke-width="3"/>
+    <line x1="150" y1="420" x2="230" y2="420" stroke="#ffffff" stroke-width="3"/>
+    <line x1="434" y1="380" x2="434" y2="460" stroke="#ffffff" stroke-width="3"/>
+    <line x1="394" y1="420" x2="474" y2="420" stroke="#ffffff" stroke-width="3"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="512" y="850" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="80" font-weight="bold">租赁管理</text>
+</svg>

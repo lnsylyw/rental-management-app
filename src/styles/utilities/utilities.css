@@ -1,0 +1,8 @@
+/* Utility classes */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* Additional utility classes can be added here */
+}
