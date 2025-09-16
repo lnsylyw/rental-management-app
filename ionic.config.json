@@ -1,7 +1,0 @@
-{
-  "name": "rental-management",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react"
-}
