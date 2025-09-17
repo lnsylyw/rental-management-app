@@ -12,7 +12,19 @@
 1. 安装 Xcode 14 或更高版本
 2. 安装 Xcode Command Line Tools
 
-## 安装依赖
+## 快速设置（推荐）
+
+### 使用自动化脚本
+```bash
+# Linux/macOS
+chmod +x setup-android.sh
+./setup-android.sh
+
+# Windows
+setup-android.bat
+```
+
+## 手动安装依赖
 
 ```bash
 # 安装 npm 依赖
@@ -21,9 +33,17 @@ npm install
 # 安装 Capacitor CLI (如果还没有全局安装)
 npm install -g @capacitor/cli
 
-# 注意：Android项目结构已经创建，无需再次添加平台
-# 如果需要重新初始化，可以删除android目录后运行：
-# npx cap add android
+# 构建 Web 应用
+npm run build
+
+# 删除现有 android 目录（如果存在问题）
+rm -rf android
+
+# 重新添加 Android 平台
+npx cap add android
+
+# 同步项目
+npx cap sync
 ```
 
 ## 构建步骤
@@ -106,9 +126,14 @@ npm run ios:dev
 ### 2. APK 构建失败
 - 检查 Android SDK 版本
 - 确保 Java 17 已安装并配置
-- 清理项目：`npx cap clean android`
-- 重新同步：`npx cap sync android`
+- 删除并重新创建 Android 项目：
+  ```bash
+  rm -rf android
+  npx cap add android
+  npx cap sync
+  ```
 - 检查 gradlew 文件权限：`chmod +x android/gradlew`
+- 如果 gradle-wrapper.jar 缺失，重新运行 `npx cap add android`
 
 ### 3. 权限问题
 - 检查 AndroidManifest.xml 中的权限配置
