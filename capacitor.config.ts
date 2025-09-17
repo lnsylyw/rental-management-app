@@ -4,7 +4,6 @@ const config: CapacitorConfig = {
   appId: 'com.rental.management',
   appName: '租房管理系统',
   webDir: 'dist',
-  bundledWebRuntime: false,
   server: {
     androidScheme: 'https',
     allowNavigation: [

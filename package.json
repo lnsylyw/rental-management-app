@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "build:mobile": "vite build && npx cap sync",
+    "android:setup": "chmod +x ci-setup-android.sh && ./ci-setup-android.sh",
     "android:dev": "npx cap run android",
     "android:build": "npm run build:mobile && npx cap build android",
     "ios:dev": "npx cap run ios",
