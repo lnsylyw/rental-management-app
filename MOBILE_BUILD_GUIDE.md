@@ -21,12 +21,9 @@ npm install
 # 安装 Capacitor CLI (如果还没有全局安装)
 npm install -g @capacitor/cli
 
-# 初始化 Capacitor (仅第一次)
-npx cap init
-
-# 添加平台
-npx cap add android
-npx cap add ios
+# 注意：Android项目结构已经创建，无需再次添加平台
+# 如果需要重新初始化，可以删除android目录后运行：
+# npx cap add android
 ```
 
 ## 构建步骤
@@ -108,8 +105,10 @@ npm run ios:dev
 
 ### 2. APK 构建失败
 - 检查 Android SDK 版本
+- 确保 Java 17 已安装并配置
 - 清理项目：`npx cap clean android`
 - 重新同步：`npx cap sync android`
+- 检查 gradlew 文件权限：`chmod +x android/gradlew`
 
 ### 3. 权限问题
 - 检查 AndroidManifest.xml 中的权限配置

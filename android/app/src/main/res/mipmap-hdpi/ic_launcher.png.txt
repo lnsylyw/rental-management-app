@@ -1,0 +1,3 @@
+This file should be replaced with an actual PNG icon file.
+The icon should be 72x72 pixels for hdpi density.
+Please generate or provide a proper app icon and rename this file to ic_launcher.png
