@@ -1,0 +1,15 @@
+{
+  "name": "rental-management-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite",
+  "hooks": {
+    "build:before": [
+      {
+        "name": "npx cap add android",
+        "command": "npx cap add android"
+      }
+    ]
+  }
+}
