@@ -1,0 +1,38 @@
+{
+  "appId": "com.rental.management",
+  "appName": "租房管理系统",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https",
+    "allowNavigation": [
+      "192.168.79.13:8000",
+      "localhost:8000",
+      "127.0.0.1:8000"
+    ]
+  },
+  "android": {
+    "allowMixedContent": true,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": true
+  },
+  "ios": {
+    "scheme": "租房管理系统"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 2000,
+      "backgroundColor": "#ffffff",
+      "showSpinner": false
+    },
+    "Keyboard": {
+      "resize": "body",
+      "style": "dark",
+      "resizeOnFullScreen": true
+    },
+    "StatusBar": {
+      "style": "default",
+      "backgroundColor": "#ffffff"
+    }
+  }
+}

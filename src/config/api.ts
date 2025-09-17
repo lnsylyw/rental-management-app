@@ -4,8 +4,17 @@
  */
 
 /**
+ * 检测是否在Capacitor环境中运行
+ */
+const isCapacitorApp = (): boolean => {
+  return window.location.protocol === 'capacitor:' ||
+         window.location.protocol === 'ionic:' ||
+         (window as any).Capacitor !== undefined;
+};
+
+/**
  * 获取API基础地址
- * 优先级：环境变量 > 动态检测
+ * 优先级：环境变量 > Capacitor环境检测 > 动态检测
  */
 export const getApiBaseUrl = (): string => {
   // 1. 优先使用环境变量配置
@@ -14,12 +23,18 @@ export const getApiBaseUrl = (): string => {
     return envApiUrl;
   }
 
-  // 2. 动态检测（兼容旧版本逻辑）
+  // 2. Capacitor移动端环境
+  if (isCapacitorApp()) {
+    // 在移动端使用固定的后端地址
+    return 'http://192.168.79.13:8000';
+  }
+
+  // 3. 动态检测（兼容旧版本逻辑）
   if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
     return 'http://localhost:8000';
   }
 
-  // 3. 局域网访问时，使用当前主机的IP，但端口改为8000
+  // 4. 局域网访问时，使用当前主机的IP，但端口改为8000
   const protocol = window.location.protocol;
   const hostname = window.location.hostname;
   return `${protocol}//${hostname}:8000`;

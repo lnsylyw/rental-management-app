@@ -372,10 +372,10 @@ const TransactionForm = ({ editMode = false, transactionData = null }: Transacti
         propertyId = properties[0].id;
       }
 
-      // 在描述中添加关联信息
+      // 在描述中添加关联信息（仅对收入类型的交易）
       let finalDescription = formData.description;
-      if (relatedInfo && !editMode) {
-        // 只在新建模式下自动添加关联信息，编辑模式下保持用户原有描述
+      if (relatedInfo && !editMode && formData.type === '收入') {
+        // 只在新建模式下且为收入类型时自动添加关联信息，支出类型不添加房间信息
         finalDescription = `${relatedInfo} ${formData.description}`;
       }
 
