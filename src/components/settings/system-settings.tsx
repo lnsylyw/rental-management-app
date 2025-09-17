@@ -5,7 +5,8 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
-import { Bell, Moon, Globe, Shield, Database } from 'lucide-react';
+import { Bell, Moon, Globe, Shield, Database, Wifi } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 // 模拟系统设置数据
 const mockSystemSettings = {
@@ -25,6 +26,7 @@ const SystemSettings = () => {
   const [settings, setSettings] = useState(mockSystemSettings);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleSwitchChange = (name: string, checked: boolean) => {
     if (name.includes('.')) {
@@ -83,6 +85,29 @@ const SystemSettings = () => {
               checked={settings.darkMode}
               onCheckedChange={(checked) => handleSwitchChange('darkMode', checked)}
             />
+          </div>
+        </div>
+
+        {/* 网络设置 */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-medium">网络</h3>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Wifi className="h-4 w-4 text-gray-500" />
+                <div>
+                  <Label>API服务器配置</Label>
+                  <p className="text-sm text-gray-500">配置后端服务器连接地址</p>
+                </div>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => navigate('/settings/network')}
+              >
+                配置
+              </Button>
+            </div>
           </div>
         </div>
 

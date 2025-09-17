@@ -27,6 +27,7 @@ import ParkingDetailPage from './pages/parking/parking-detail-page';
 import ContractPage from './pages/contract/contract-page';
 import ContractDetailPage from './pages/contract/contract-detail-page';
 import ContractFormPage from './pages/contract/contract-form-page';
+import NetworkSettings from './pages/settings/network-settings';
 
 // 带有动画的路由容器
 const AnimatedRoutes = () => {
@@ -63,6 +64,7 @@ const AnimatedRoutes = () => {
         <Route path="/contracts/edit/:id" element={<ContractFormPage />} />
         <Route path="/contracts/:id" element={<ContractDetailPage />} />
         <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/settings/network" element={<NetworkSettings />} />
         <Route path="/notifications" element={<NotificationPage />} />
       </Routes>
     </AnimatePresence>
