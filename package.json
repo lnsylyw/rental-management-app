@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "postinstall": "node ensure-android.js",
+    "postinstall": "npx cap add android || echo 'Android platform already exists or will be added later'",
     "build:mobile": "vite build && npx cap add android && npx cap sync",
     "android:setup": "chmod +x build-android.sh && ./build-android.sh",
     "android:dev": "npx cap run android",
@@ -17,6 +17,10 @@
     "ios:build": "npm run build:mobile && npx cap build ios"
   },
   "dependencies": {
+    "@capacitor/android": "^6.2.1",
+    "@capacitor/cli": "^6.2.1",
+    "@capacitor/core": "^6.2.1",
+    "@capacitor/ios": "^6.2.1",
     "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-accordion": "1.2.2",
     "@radix-ui/react-alert-dialog": "1.1.4",
