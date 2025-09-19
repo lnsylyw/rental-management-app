@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
-    <!-- 允许所有HTTP明文流量，适用于开发和内网环境 -->
+    <!-- 完全允许所有HTTP明文流量 - 开发环境专用 -->
     <base-config cleartextTrafficPermitted="true">
         <trust-anchors>
             <certificates src="system"/>
@@ -8,34 +8,11 @@
         </trust-anchors>
     </base-config>
 
-    <!-- 允许所有192.168.x.x网段 -->
-    <domain-config cleartextTrafficPermitted="true">
-        <!-- 本地地址 -->
-        <domain includeSubdomains="true">localhost</domain>
-        <domain includeSubdomains="true">127.0.0.1</domain>
-
-        <!-- 192.168.0.x 网段 -->
-        <domain includeSubdomains="true">192.168.0.1</domain>
-        <domain includeSubdomains="true">192.168.0.100</domain>
-        <domain includeSubdomains="true">192.168.0.101</domain>
-
-        <!-- 192.168.1.x 网段 -->
-        <domain includeSubdomains="true">192.168.1.1</domain>
-        <domain includeSubdomains="true">192.168.1.100</domain>
-        <domain includeSubdomains="true">192.168.1.101</domain>
-
-        <!-- 192.168.79.x 网段（您的目标地址） -->
-        <domain includeSubdomains="true">192.168.79.1</domain>
-        <domain includeSubdomains="true">192.168.79.13</domain>
-        <domain includeSubdomains="true">192.168.79.15</domain>
-        <domain includeSubdomains="true">192.168.79.100</domain>
-
-        <!-- Android模拟器地址 -->
-        <domain includeSubdomains="true">10.0.2.2</domain>
-
-        <!-- 其他常见内网地址 -->
-        <domain includeSubdomains="true">172.16.0.1</domain>
-        <domain includeSubdomains="true">172.16.1.1</domain>
-        <domain includeSubdomains="true">172.16.1.100</domain>
-    </domain-config>
+    <!-- 调试模式 - 覆盖所有安全检查 -->
+    <debug-overrides>
+        <trust-anchors>
+            <certificates src="system"/>
+            <certificates src="user"/>
+        </trust-anchors>
+    </debug-overrides>
 </network-security-config>

@@ -3,6 +3,7 @@ import LoginForm from '@/components/auth/login-form';
 import PageTransition from '@/components/ui/page-transition';
 import AnimatedContainer from '@/components/ui/animated-container';
 import IonicNetworkDebug from '@/components/debug/ionic-network-debug';
+import SimpleNetworkTest from '@/components/debug/simple-network-test';
 import { Button } from '@/components/ui/button';
 import { Settings } from 'lucide-react';
 
@@ -34,7 +35,10 @@ const LoginPage = () => {
                 关闭
               </Button>
             </div>
-            <IonicNetworkDebug />
+            <SimpleNetworkTest />
+            <div className="mt-4">
+              <IonicNetworkDebug />
+            </div>
           </div>
         )}
 
