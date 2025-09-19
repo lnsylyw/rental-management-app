@@ -43,11 +43,11 @@ const testApiConnection = async (url: string): Promise<boolean> => {
  */
 const getAvailableApiUrl = async (): Promise<string> => {
   const possibleUrls = [
-    'http://192.168.79.13:8000',  // 原始地址
-    'http://192.168.79.15:8000',  // 备用地址
-    'http://192.168.1.100:8000',  // 常见局域网地址
-    'http://10.0.2.2:8000',       // Android模拟器地址
-    'http://localhost:8000'       // 本地地址
+    '192.168.79.13:8000',  // 原始地址（不带协议前缀）
+    '192.168.79.15:8000',  // 备用地址
+    '192.168.1.100:8000',  // 常见局域网地址
+    '10.0.2.2:8000',       // Android模拟器地址
+    'localhost:8000'       // 本地地址
   ];
 
   // 并行测试所有地址
@@ -93,23 +93,22 @@ export const getApiBaseUrl = (): string => {
       const availableUrl = await getAvailableApiUrl();
       localStorage.setItem('api_base_url', availableUrl);
       // 如果当前使用的地址与找到的可用地址不同，可以考虑刷新页面或提示用户
-      if (availableUrl !== 'http://192.168.79.13:8000') {
+      if (availableUrl !== '192.168.79.13:8000') {
         console.log('检测到更好的API地址，已缓存供下次使用');
       }
     }, 100);
 
-    return 'http://192.168.79.13:8000'; // 默认地址
+    return '192.168.79.13:8000'; // 默认地址（不带协议前缀）
   }
 
   // 3. 动态检测（兼容旧版本逻辑）
   if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-    return 'http://localhost:8000';
+    return 'localhost:8000';
   }
 
   // 4. 局域网访问时，使用当前主机的IP，但端口改为8000
-  const protocol = window.location.protocol;
   const hostname = window.location.hostname;
-  return `${protocol}//${hostname}:8000`;
+  return `${hostname}:8000`;
 };
 
 // 导出API基础地址
