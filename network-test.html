@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网络连接测试工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-item {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+            border-left: 4px solid #ccc;
+        }
+        .success {
+            background-color: #d4edda;
+            border-left-color: #28a745;
+        }
+        .error {
+            background-color: #f8d7da;
+            border-left-color: #dc3545;
+        }
+        .testing {
+            background-color: #fff3cd;
+            border-left-color: #ffc107;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        .info {
+            background-color: #e7f3ff;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .url-input {
+            width: 300px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 网络连接测试工具</h1>
+        
+        <div class="info">
+            <h3>环境信息</h3>
+            <div id="envInfo"></div>
+        </div>
+
+        <div>
+            <h3>快速测试</h3>
+            <button onclick="testAllUrls()" id="testAllBtn">测试所有地址</button>
+            <button onclick="testLoginAPI()" id="testLoginBtn">测试登录API</button>
+            <button onclick="clearResults()">清除结果</button>
+        </div>
+
+        <div>
+            <h3>自定义测试</h3>
+            <input type="text" id="customUrl" class="url-input" placeholder="http://192.168.79.13:8000" value="http://192.168.79.13:8000">
+            <button onclick="testCustomUrl()">测试自定义地址</button>
+        </div>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+        // 显示环境信息
+        function showEnvironmentInfo() {
+            const info = {
+                protocol: window.location.protocol,
+                hostname: window.location.hostname,
+                port: window.location.port,
+                href: window.location.href,
+                userAgent: navigator.userAgent,
+                online: navigator.onLine,
+                isCapacitor: window.location.protocol === 'capacitor:' || 
+                           window.location.protocol === 'ionic:' ||
+                           window.Capacitor !== undefined,
+                hasCapacitor: window.Capacitor !== undefined,
+                hasIonic: window.Ionic !== undefined
+            };
+
+            document.getElementById('envInfo').innerHTML = `
+                <div><strong>协议:</strong> ${info.protocol}</div>
+                <div><strong>主机:</strong> ${info.hostname}</div>
+                <div><strong>端口:</strong> ${info.port || '默认'}</div>
+                <div><strong>在线状态:</strong> ${info.online ? '在线' : '离线'}</div>
+                <div><strong>是否Capacitor环境:</strong> ${info.isCapacitor ? '是' : '否'}</div>
+                <div><strong>Capacitor对象:</strong> ${info.hasCapacitor ? '存在' : '不存在'}</div>
+                <div><strong>Ionic对象:</strong> ${info.hasIonic ? '存在' : '不存在'}</div>
+                <div><strong>完整地址:</strong> ${info.href}</div>
+            `;
+        }
+
+        // 测试单个URL
+        async function testUrl(url, timeout = 5000) {
+            const startTime = Date.now();
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+                const response = await fetch(`${url}/health`, {
+                    method: 'GET',
+                    signal: controller.signal,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                clearTimeout(timeoutId);
+                const responseTime = Date.now() - startTime;
+
+                return {
+                    url,
+                    success: response.ok,
+                    status: response.status,
+                    responseTime,
+                    error: response.ok ? null : `HTTP ${response.status}`
+                };
+            } catch (error) {
+                const responseTime = Date.now() - startTime;
+                return {
+                    url,
+                    success: false,
+                    status: 0,
+                    responseTime,
+                    error: error.message
+                };
+            }
+        }
+
+        // 显示测试结果
+        function showResult(result) {
+            const resultsDiv = document.getElementById('results');
+            const resultClass = result.success ? 'success' : 'error';
+            const statusText = result.success ? 
+                `✅ 连接成功 (${result.responseTime}ms)` : 
+                `❌ 连接失败: ${result.error}`;
+
+            resultsDiv.innerHTML += `
+                <div class="test-item ${resultClass}">
+                    <strong>${result.url}</strong><br>
+                    ${statusText}
+                    ${result.status ? `<br>状态码: ${result.status}` : ''}
+                </div>
+            `;
+        }
+
+        // 测试所有可能的URL
+        async function testAllUrls() {
+            const testUrls = [
+                'http://192.168.79.13:8000',  // 主要地址
+                'http://192.168.79.15:8000',  // 备用地址
+                'http://192.168.1.100:8000',  // 常见局域网地址
+                'http://192.168.1.1:8000',    // 默认网关
+                'http://192.168.0.1:8000',    // 另一个常见网关
+                'http://10.0.2.2:8000',       // Android模拟器
+                'http://localhost:8000'       // 本地地址
+            ];
+
+            document.getElementById('testAllBtn').disabled = true;
+            document.getElementById('results').innerHTML = '<h3>测试结果</h3>';
+
+            for (const url of testUrls) {
+                document.getElementById('results').innerHTML += `
+                    <div class="test-item testing">
+                        <strong>${url}</strong><br>
+                        🔄 测试中...
+                    </div>
+                `;
+
+                const result = await testUrl(url);
+                // 移除测试中的状态
+                const testingItems = document.querySelectorAll('.testing');
+                if (testingItems.length > 0) {
+                    testingItems[testingItems.length - 1].remove();
+                }
+                showResult(result);
+            }
+
+            document.getElementById('testAllBtn').disabled = false;
+        }
+
+        // 测试自定义URL
+        async function testCustomUrl() {
+            const url = document.getElementById('customUrl').value.trim();
+            if (!url) {
+                alert('请输入URL地址');
+                return;
+            }
+
+            document.getElementById('results').innerHTML += `
+                <div class="test-item testing">
+                    <strong>${url}</strong><br>
+                    🔄 测试中...
+                </div>
+            `;
+
+            const result = await testUrl(url);
+            // 移除测试中的状态
+            const testingItems = document.querySelectorAll('.testing');
+            if (testingItems.length > 0) {
+                testingItems[testingItems.length - 1].remove();
+            }
+            showResult(result);
+        }
+
+        // 测试登录API
+        async function testLoginAPI() {
+            const url = document.getElementById('customUrl').value.trim() || 'http://192.168.79.13:8000';
+            
+            document.getElementById('testLoginBtn').disabled = true;
+            document.getElementById('results').innerHTML += `
+                <div class="test-item testing">
+                    <strong>${url}/auth/login</strong><br>
+                    🔄 测试登录API...
+                </div>
+            `;
+
+            try {
+                const response = await fetch(`${url}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: 'test',
+                        password: 'test'
+                    })
+                });
+
+                const responseText = await response.text();
+                
+                // 移除测试中的状态
+                const testingItems = document.querySelectorAll('.testing');
+                if (testingItems.length > 0) {
+                    testingItems[testingItems.length - 1].remove();
+                }
+
+                const resultClass = response.ok ? 'success' : 'error';
+                document.getElementById('results').innerHTML += `
+                    <div class="test-item ${resultClass}">
+                        <strong>${url}/auth/login</strong><br>
+                        状态码: ${response.status}<br>
+                        响应: ${responseText.substring(0, 200)}${responseText.length > 200 ? '...' : ''}
+                    </div>
+                `;
+            } catch (error) {
+                // 移除测试中的状态
+                const testingItems = document.querySelectorAll('.testing');
+                if (testingItems.length > 0) {
+                    testingItems[testingItems.length - 1].remove();
+                }
+
+                document.getElementById('results').innerHTML += `
+                    <div class="test-item error">
+                        <strong>${url}/auth/login</strong><br>
+                        ❌ 错误: ${error.message}
+                    </div>
+                `;
+            }
+
+            document.getElementById('testLoginBtn').disabled = false;
+        }
+
+        // 清除结果
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+        }
+
+        // 页面加载时显示环境信息
+        window.onload = function() {
+            showEnvironmentInfo();
+        };
+    </script>
+</body>
+</html>

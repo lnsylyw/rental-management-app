@@ -12,19 +12,18 @@ const LoginPage = () => {
   return (
     <PageTransition>
       <div className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-100 flex flex-col items-center justify-center p-4">
-        {/* 调试按钮 - 只在移动端显示 */}
-        {(window.location.protocol === 'capacitor:' || window.location.protocol === 'ionic:') && (
-          <div className="fixed top-4 right-4 z-50">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowDebug(!showDebug)}
-              className="bg-white/80 backdrop-blur-sm"
-            >
-              <Settings className="h-4 w-4" />
-            </Button>
-          </div>
-        )}
+        {/* 调试按钮 - 始终显示，方便测试 */}
+        <div className="fixed top-4 right-4 z-50">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowDebug(!showDebug)}
+            className="bg-white/80 backdrop-blur-sm"
+            title="网络调试工具"
+          >
+            <Settings className="h-4 w-4" />
+          </Button>
+        </div>
 
         {/* 网络调试面板 */}
         {showDebug && (
@@ -42,6 +41,19 @@ const LoginPage = () => {
         <AnimatedContainer animation="slideInFromTopVariants" delay={0.2}>
           <div className="w-full max-w-md">
             <LoginForm />
+
+            {/* 底部调试按钮 */}
+            <div className="mt-4 text-center">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowDebug(!showDebug)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <Settings className="h-4 w-4 mr-2" />
+                网络调试工具
+              </Button>
+            </div>
           </div>
         </AnimatedContainer>
 
