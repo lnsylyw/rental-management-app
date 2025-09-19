@@ -4,12 +4,14 @@
  */
 
 /**
- * 检测是否在Capacitor环境中运行
+ * 检测是否在Capacitor/Ionic环境中运行
  */
 const isCapacitorApp = (): boolean => {
   return window.location.protocol === 'capacitor:' ||
          window.location.protocol === 'ionic:' ||
-         (window as any).Capacitor !== undefined;
+         (window as any).Capacitor !== undefined ||
+         (window as any).Ionic !== undefined ||
+         (document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1);
 };
 
 /**

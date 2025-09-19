@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- 允许所有HTTP明文流量，适用于开发和内网环境 -->
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system"/>
+        </trust-anchors>
+    </base-config>
+    
+    <!-- 特定域名配置 -->
+    <domain-config cleartextTrafficPermitted="true">
+        <!-- 本地地址 -->
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">127.0.0.1</domain>
+        
+        <!-- 常见局域网地址 -->
+        <domain includeSubdomains="true">192.168.1.1</domain>
+        <domain includeSubdomains="true">192.168.1.100</domain>
+        <domain includeSubdomains="true">192.168.79.13</domain>
+        <domain includeSubdomains="true">192.168.79.15</domain>
+        
+        <!-- Android模拟器地址 -->
+        <domain includeSubdomains="true">10.0.2.2</domain>
+        
+        <!-- 其他可能的内网地址 -->
+        <domain includeSubdomains="true">172.16.0.1</domain>
+        <domain includeSubdomains="true">172.16.1.1</domain>
+    </domain-config>
+</network-security-config>
