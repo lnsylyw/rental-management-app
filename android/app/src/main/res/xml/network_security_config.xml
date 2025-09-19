@@ -4,26 +4,38 @@
     <base-config cleartextTrafficPermitted="true">
         <trust-anchors>
             <certificates src="system"/>
+            <certificates src="user"/>
         </trust-anchors>
     </base-config>
-    
-    <!-- 特定域名配置 -->
+
+    <!-- 允许所有192.168.x.x网段 -->
     <domain-config cleartextTrafficPermitted="true">
         <!-- 本地地址 -->
         <domain includeSubdomains="true">localhost</domain>
         <domain includeSubdomains="true">127.0.0.1</domain>
-        
-        <!-- 常见局域网地址 -->
+
+        <!-- 192.168.0.x 网段 -->
+        <domain includeSubdomains="true">192.168.0.1</domain>
+        <domain includeSubdomains="true">192.168.0.100</domain>
+        <domain includeSubdomains="true">192.168.0.101</domain>
+
+        <!-- 192.168.1.x 网段 -->
         <domain includeSubdomains="true">192.168.1.1</domain>
         <domain includeSubdomains="true">192.168.1.100</domain>
+        <domain includeSubdomains="true">192.168.1.101</domain>
+
+        <!-- 192.168.79.x 网段（您的目标地址） -->
+        <domain includeSubdomains="true">192.168.79.1</domain>
         <domain includeSubdomains="true">192.168.79.13</domain>
         <domain includeSubdomains="true">192.168.79.15</domain>
-        
+        <domain includeSubdomains="true">192.168.79.100</domain>
+
         <!-- Android模拟器地址 -->
         <domain includeSubdomains="true">10.0.2.2</domain>
-        
-        <!-- 其他可能的内网地址 -->
+
+        <!-- 其他常见内网地址 -->
         <domain includeSubdomains="true">172.16.0.1</domain>
         <domain includeSubdomains="true">172.16.1.1</domain>
+        <domain includeSubdomains="true">172.16.1.100</domain>
     </domain-config>
 </network-security-config>
